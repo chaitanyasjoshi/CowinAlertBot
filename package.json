@@ -4,6 +4,7 @@
   "description": "Get latest updates about vaccination slots in India",
   "main": "index.js",
   "scripts": {
+	"start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "chaitanyasjoshi",
