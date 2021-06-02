@@ -1,0 +1,16 @@
+{
+  "name": "cowialertbot",
+  "version": "1.0.0",
+  "description": "Get latest updates about vaccination slots in India",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "chaitanyasjoshi",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "node-fetch": "^2.6.1",
+    "telegraf": "^4.3.0"
+  }
+}
