@@ -22,7 +22,9 @@ Center Name: ${session.name}
 Address: ${session.address}
 Date: ${session.date}
 
-Dose Available: ${session.available_capacity}
+Total Dose Available: ${session.available_capacity}
+Dose 1 Available Capacity: ${session.available_capacity_dose1}
+Dose 2 Available Capacity: ${session.available_capacity_dose2}
 
 Vaccine: ${session.vaccine}
 Fee: ${
@@ -46,7 +48,12 @@ const fetchSlots = async (pincode) => {
   const { sessions } = await fetch(
     `https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByPin?pincode=${pincode}&date=${today}`
   ).then((response) => response.json());
-  return sessions;
+
+  const filteredSessions = sessions.filter(
+    (session) => session.available_capacity > 0
+  );
+
+  return filteredSessions;
 };
 
 bot.launch();
