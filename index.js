@@ -26,9 +26,9 @@ Dose Available: ${session.available_capacity}
 
 Vaccine: ${session.vaccine}
 Fee: ${
-            session.fee_type === 'Paid' || session.fee === 0
-              ? '₹ ' + session.fee
-              : session.fee_type
+            session.fee_type === 'Free' || session.fee === '0'
+              ? 'Free'
+              : '₹ ' + session.fee
           }`
         );
       });
