@@ -6,6 +6,7 @@ const schedule = require('node-schedule');
 const bot = new Telegraf(process.env.BOT_TOKEN);
 
 let pincode;
+let age;
 
 bot.start(async (ctx) => {
   ctx.reply('How to get started guide');
@@ -18,6 +19,11 @@ bot.command('setpincode', (ctx) => {
   bot.hears(/^[1-9][0-9]{5}$/, async (ctx) => {
     pincode = ctx.message.text;
   });
+});
+
+bot.command('setage', (ctx) => {
+  ctx.reply('Choose your age group 18+/45+');
+  age = ctx.message.text;
 });
 
 bot.command('notify', (ctx) => {
