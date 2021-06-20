@@ -7,6 +7,8 @@ const bot = new Telegraf(process.env.BOT_TOKEN);
 
 let pincode;
 let age;
+let vaccine;
+let dose;
 
 bot.start(async (ctx) => {
   ctx.reply('How to get started guide');
@@ -24,6 +26,16 @@ bot.command('setpincode', (ctx) => {
 bot.command('setage', (ctx) => {
   ctx.reply('Choose your age group 18+/45+');
   age = ctx.message.text;
+});
+
+bot.command('setvaccine', (ctx) => {
+  ctx.reply('Choose your preffered vaccine');
+  vaccine = ctx.message.text;
+});
+
+bot.command('setdose', (ctx) => {
+  ctx.reply('Choose your dose');
+  dose = ctx.message.text;
 });
 
 bot.command('notify', (ctx) => {
