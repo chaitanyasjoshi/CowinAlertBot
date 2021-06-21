@@ -25,7 +25,9 @@ bot.command('setpincode', (ctx) => {
 
 bot.command('setage', (ctx) => {
   ctx.reply('Choose your age group 18+/45+');
-  age = ctx.message.text;
+  bot.hears('18+', (ctx) => {
+    age = 18;
+  });
 });
 
 bot.command('setvaccine', (ctx) => {
@@ -84,9 +86,15 @@ const fetchSlots = async () => {
     `https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByPin?pincode=${pincode}&date=${today}`
   ).then((response) => response.json());
 
-  const filteredSessions = sessions.filter(
+  let filteredSessions = sessions.filter(
     (session) => session.available_capacity > 0
   );
+
+  if (age) {
+    filteredSessions = sessions.filter(
+      (session) => session.min_age_limit === age
+    );
+  }
 
   return filteredSessions;
 };
