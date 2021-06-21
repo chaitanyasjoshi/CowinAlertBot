@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { Telegraf } = require('telegraf');
+const { Telegraf, Markup } = require('telegraf');
 const fetch = require('node-fetch');
 const schedule = require('node-schedule');
 
@@ -10,7 +10,7 @@ let age;
 let vaccine;
 let dose;
 
-bot.start(async (ctx) => {
+bot.start((ctx) => {
   ctx.reply('How to get started guide');
   // TODO: Add description of how to get started
 });
@@ -18,15 +18,27 @@ bot.start(async (ctx) => {
 bot.command('setpincode', (ctx) => {
   ctx.reply('Enter your pincode');
 
-  bot.hears(/^[1-9][0-9]{5}$/, async (ctx) => {
+  bot.hears(/^[1-9][0-9]{5}$/, (ctx) => {
     pincode = ctx.message.text;
   });
 });
 
 bot.command('setage', (ctx) => {
-  ctx.reply('Choose your age group 18+/45+');
+  ctx.reply(
+    'Choose your age group',
+    Markup.keyboard([
+      ['18+', '45+'], // Row1 with 2 buttons
+    ])
+      .oneTime()
+      .resize()
+  );
+
   bot.hears('18+', (ctx) => {
     age = 18;
+  });
+
+  bot.hears('45+', (ctx) => {
+    age = 45;
   });
 });
 
