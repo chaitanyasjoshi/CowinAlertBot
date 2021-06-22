@@ -26,25 +26,39 @@ bot.command('setpincode', (ctx) => {
 bot.command('setage', (ctx) => {
   ctx.reply(
     'Choose your age group',
-    Markup.keyboard([
-      ['18+', '45+'], // Row1 with 2 buttons
-    ])
+    Markup.keyboard([['18+', '45+']])
       .oneTime()
       .resize()
   );
 
-  bot.hears('18+', (ctx) => {
+  bot.hears('18+', () => {
     age = 18;
   });
 
-  bot.hears('45+', (ctx) => {
+  bot.hears('45+', () => {
     age = 45;
   });
 });
 
 bot.command('setvaccine', (ctx) => {
-  ctx.reply('Choose your preffered vaccine');
-  vaccine = ctx.message.text;
+  ctx.reply(
+    'Choose your preffered vaccine',
+    Markup.keyboard([['COVISHIELD', 'COVAXIN', 'SPUTNIK V']])
+      .oneTime()
+      .resize()
+  );
+
+  bot.hears('COVISHIELD', () => {
+    vaccine = 'COVISHIELD';
+  });
+
+  bot.hears('COVAXIN', () => {
+    vaccine = 'COVAXIN';
+  });
+
+  bot.hears('SPUTNIK V', () => {
+    vaccine = 'SPUTNIK V';
+  });
 });
 
 bot.command('setdose', (ctx) => {
@@ -105,6 +119,12 @@ const fetchSlots = async () => {
   if (age) {
     filteredSessions = sessions.filter(
       (session) => session.min_age_limit === age
+    );
+  }
+
+  if (vaccine) {
+    filteredSessions = sessions.filter(
+      (session) => session.vaccine === vaccine
     );
   }
 
