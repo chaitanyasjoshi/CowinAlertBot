@@ -62,8 +62,20 @@ bot.command('setvaccine', (ctx) => {
 });
 
 bot.command('setdose', (ctx) => {
-  ctx.reply('Choose your dose');
-  dose = ctx.message.text;
+  ctx.reply(
+    'Choose your dose',
+    Markup.keyboard([['Dose 1', 'Dose 2']])
+      .oneTime()
+      .resize()
+  );
+
+  bot.hears('Dose 1', () => {
+    dose = 1;
+  });
+
+  bot.hears('Dose 2', () => {
+    dose = 2;
+  });
 });
 
 bot.command('notify', (ctx) => {
@@ -117,15 +129,26 @@ const fetchSlots = async () => {
   );
 
   if (age) {
-    filteredSessions = sessions.filter(
+    filteredSessions = filteredSessions.filter(
       (session) => session.min_age_limit === age
     );
   }
 
   if (vaccine) {
-    filteredSessions = sessions.filter(
+    filteredSessions = filteredSessions.filter(
       (session) => session.vaccine === vaccine
     );
+  }
+
+  if (dose) {
+    filteredSessions =
+      dose === 1
+        ? filteredSessions.filter(
+            (session) => session.available_capacity_dose1 > 0
+          )
+        : filteredSessions.filter(
+            (session) => session.available_capacity_dose2 > 0
+          );
   }
 
   return filteredSessions;
